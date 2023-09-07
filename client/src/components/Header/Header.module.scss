@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    height: var(--nav-bar-height);
+    width: 100%;
+    align-items: center;
+}
+
+.right__side {
+    align-items: center;
+    display: flex;
+    margin-left: 20%;
+}

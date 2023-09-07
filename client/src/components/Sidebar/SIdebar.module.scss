@@ -1,0 +1,16 @@
+.sidebar {
+    min-height: calc(100vh - var(--nav-bar-height));
+    width: var(--sidebar-width);
+    border: 1px solid black;
+    position: relative;
+    margin-right: 5px;
+}
+
+.sidebar h1 {
+    font-size: 1rem;
+}
+
+.range{
+    margin: 20px 5px;
+    border: 2px solid gray;
+}
