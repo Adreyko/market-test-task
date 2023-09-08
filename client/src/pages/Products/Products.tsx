@@ -1,9 +1,9 @@
 import { FC } from "react";
-import ProductsComponent from "../../components/Products/ProductsComponent";
+import MainContent from "../../components/MainContent/MainContent";
 const Products: FC = () => {
   return (
     <div className="page-content">
-      <ProductsComponent />
+      <MainContent />
     </div>
   );
 };

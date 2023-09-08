@@ -1,0 +1,13 @@
+.cartitem {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cartitem div {
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background-color: black;
+}

@@ -1,44 +1,27 @@
-import { InputBase } from "@material-ui/core";
-import { styled, alpha } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+import { SearchStyle } from "./SeachThemeMui";
+import { SearchIconWrapper } from "./SeachThemeMui";
+import { StyledInputBase } from "./SeachThemeMui";
 import SearchIcon from "@mui/icons-material/Search";
-const SearchStyle = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: "50px",
-  width: "50%",
-  backgroundColor: alpha(theme.palette.grey[500], 0.15),
-  "&:hover": {
-    border: "1px solid black",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    width: "100%",
-  },
-}));
+import { useAppDispatch } from "../../../redux/hooks/redux-hook";
+import { setSearchedProducts } from "../../../redux/slices/searchSlice";
 const Search = () => {
+  const [searchByName, setSearchByName] = useState("");
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setSearchedProducts(searchByName));
+  }, [searchByName]);
   return (
     <SearchStyle>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        onChange={(e) => setSearchByName(e.target.value)}
         sx={{
           width: "100%",
         }}
+        value={searchByName}
         placeholder="Search"
         type="search"
         inputProps={{ "aria-label": "search" }}
