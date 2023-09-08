@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import cls from "./Stars.module.scss";
 import { Star } from "@mui/icons-material";
 import { muiStyles } from "./muiStyles";
 import { useAppDispatch } from "../../../redux/hooks/redux-hook";
 import { setRatingProducts } from "../../../redux/slices/ratingSlice";
+
 
 const Stars = () => {
   const fourStars = new Array(4)
@@ -21,9 +22,11 @@ const Stars = () => {
   const [sortyByRating, setSortByRating] = useState(0);
 
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(setRatingProducts(sortyByRating));
   }, [sortyByRating]);
+
 
   return (
     <div className={cls.container}>

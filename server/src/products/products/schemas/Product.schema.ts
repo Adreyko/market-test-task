@@ -12,6 +12,8 @@ export class Product {
   price: number;
   @Prop()
   rate: Array<number>;
+  @Prop()
+  averageRate : number;
 
 }
 

@@ -9,6 +9,7 @@ import cartSlice from "../slices/cartSlice";
 import sortSlice from "../slices/sortSlice";
 import searchSlice from "../slices/searchSlice";
 import ratingSlice from "../slices/ratingSlice";
+import rangePriceSlice from "../slices/rangePriceSlice";
 const reducer = productSlice;
 const configreStoreDefaultOptions: ConfigureStoreOptions = { reducer };
 
@@ -26,7 +27,8 @@ export const reduxStore = configureStore({
     cart : cartSlice,
     sortBy : sortSlice,
     search : searchSlice,
-    rating : ratingSlice
+    rating : ratingSlice,
+    rangePrice : rangePriceSlice
   },
 });
 

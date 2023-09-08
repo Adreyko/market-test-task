@@ -8,6 +8,7 @@ import { productMuiStyles } from "./muiStyles";
 import Rate from "./Rate/Rate";
 import Watch from "./Watch/Watch";
 import cls from "./Product.module.scss";
+import { muiStyles } from "../../Sidebar/Stars/muiStyles";
 
 const Product: FC<IProduct> = ({ price, description, image, rate, _id }) => {
   const totalRate = rate.reduce(
@@ -27,12 +28,18 @@ const Product: FC<IProduct> = ({ price, description, image, rate, _id }) => {
   };
 
   return (
-    <Grid sx={productMuiStyles.gridStyle} item lg={3} xl={1}>
+    <Grid
+      sx={productMuiStyles.gridStyle}
+      style={{ padding: "20px" }}
+      item
+      lg={3}
+      xl={1}
+    >
       <Paper style={productMuiStyles.paperStyle}>
         <image />
       </Paper>
       <p className={cls.description}>{description}</p>
-      <Typography style={{ color: "blue" ,marginBottom:'10px'}}>
+      <Typography style={{ color: "blue", marginBottom: "10px" }}>
         {image.replace(".png", "")}
       </Typography>
       <Typography style={{ fontWeight: "bold" }}>${price}</Typography>
@@ -40,12 +47,9 @@ const Product: FC<IProduct> = ({ price, description, image, rate, _id }) => {
         <div className={cls.rate__info}>
           {starsArr}
           {Number.isInteger(totalRate) ? (
-            <Star style={{ fontSize: "15px" }} sx={{ color: "orange" }} />
+            <Star sx={muiStyles.starStyle} />
           ) : (
-            <StarHalfIcon
-              style={{ fontSize: "15px" }}
-              sx={{ color: "orange" }}
-            />
+            <StarHalfIcon sx={muiStyles.starStyle} />
           )}{" "}
           <p style={{ fontSize: "10px" }}>{totalRate.toFixed(2)}</p>
         </div>

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
 import { Product } from "./schemas/Product.schema";
 import { InjectModel } from "@nestjs/mongoose";
+import { Request } from "express";
 
 @Injectable()
 export class ProductsService {
@@ -9,53 +10,43 @@ export class ProductsService {
     @InjectModel(Product.name) private productModel: Model<Product>
   ) {}
 
-  async findAll(sortBy?: string): Promise<Product[]> {
-    const pipeline: any[] = [
-      {
-        $match: { rate: { $exists: true, $not: { $size: 0 } } },
-      },
-      {
-        $addFields: {
-          averageRate: { $avg: "$rate" },
-        },
-      },
-    ];
+  async findAll(req: Request) {
+    const { name, sort, filteredRating, minPrice, maxPrice } = req.query;
 
-    if (sortBy === "cheapest") {
-      pipeline.push({ $sort: { price: 1 } });
-    } else if (sortBy === "expensive") {
-      pipeline.push({ $sort: { price: -1 } });
-    } else if (sortBy === "top") {
-      pipeline.push({ $sort: { averageRate: -1 } });
+    const query: any = {};
+
+    if (name) {
+      query.image = new RegExp(name.toString(), "i");
     }
 
-    const products = await this.productModel.aggregate(pipeline).exec();
+    const mongooseQuery = this.productModel.find(query);
 
-    return products;
-  }
+    if (sort) {
+      if (sort === "cheapest") {
+        mongooseQuery.sort({ price: 1 });
+      } else if (sort === "expensive") {
+        mongooseQuery.sort({ price: -1 });
+      } else if (sort === "top") {
+        mongooseQuery.sort({ averageRate: -1 });
+      }
+    }
 
-  async findByName(search?: string): Promise<Product[]> {
-    const findByImageName = await this.productModel.find({
-      image: { $regex: new RegExp(search, "i") },
-    });
+    if (filteredRating) {
+      mongooseQuery.where({ averageRate: { $gte: Number(filteredRating) } });
+    }
 
-    return findByImageName;
-  }
+    if (minPrice || maxPrice) {
+      const priceFilter: any = {};
+      if (minPrice) {
+        priceFilter.$gte = Number(minPrice);
+      }
+      if (maxPrice) {
+        priceFilter.$lte = Number(maxPrice);
+      }
+      mongooseQuery.where({ price: priceFilter });
+    }
 
-  async findByRating(rating?: number) {
-    const pipeline: any[] = [
-      {
-        $match: { rate: { $exists: true, $not: { $size: 0 } } },
-      },
-      {
-        $addFields: {
-          averageRate: { $avg: "$rate" },
-        },
-      },
-    ];
-    const convertedRation = Number(rating)
-    const products = await this.productModel.aggregate(pipeline).exec();
-    const filteredByRating = products.filter((el) => el.averageRate >= convertedRation);
-    return filteredByRating;
+    console.log(mongooseQuery.getQuery());
+    return mongooseQuery.exec();
   }
 }

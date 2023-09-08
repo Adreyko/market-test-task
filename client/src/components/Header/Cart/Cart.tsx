@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import  { FC, useState } from "react";
 import cls from "./Cart.module.scss";
 import { useAppSelector } from "../../../redux/hooks/redux-hook";
 import CartItem from "./CartItem/CartItem";
