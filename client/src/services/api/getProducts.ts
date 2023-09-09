@@ -27,19 +27,19 @@ export const getProducts = async ({
     params.sort = sort;
   }
 
-  if (rating !== undefined) {
+  if (rating) {
     params.rating = rating;
   }
 
-  if (filteredRating !== undefined) {
+  if (filteredRating) {
     params.filteredRating = filteredRating;
   }
 
-  if (minPrice !== undefined) {
+  if (minPrice) {
     params.minPrice = minPrice;
   }
 
-  if (maxPrice !== undefined) {
+  if (maxPrice) {
     params.maxPrice = maxPrice;
   }
 
